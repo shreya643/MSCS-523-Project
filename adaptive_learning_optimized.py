@@ -51,15 +51,21 @@ class CourseGraph:
 class PriorityContentQueue:
     def __init__(self):
         self.heap = []
+        self.invalidated = set()
 
     def add_content(self, content_id, priority):
         heapq.heappush(self.heap, (-priority, content_id)) 
+    
+    def delete_content(self, content_id):
+        self.invalidated.add(content_id)
 
     def get_highest_priority(self):
-        if not self.heap:
-            return None
-        return heapq.heappop(self.heap)[1]
-
+        while self.heap:
+            priority, content_id = heapq.heappop(self.heap)
+            if content_id not in self.invalidated:
+                return content_id
+        return None 
+    
     def peek_highest_priority(self):
         if not self.heap:
             return None

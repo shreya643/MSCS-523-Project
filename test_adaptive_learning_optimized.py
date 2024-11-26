@@ -81,6 +81,7 @@ class TestOptimizedClasses:
         while not self.priority_queue.is_empty():
             self.priority_queue.get_highest_priority()
         print(f"Processed {num_items} items in {time.time() - start_time:.4f} seconds")
+        
 
     def run_tests(self):
         self.test_course_graph()
